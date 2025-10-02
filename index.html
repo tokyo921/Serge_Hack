@@ -74,36 +74,6 @@
       color: #00ffcc;
       margin-top: 20px;
     }
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-content {
-      background: #111c2b;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 350px;
-      width: 90%;
-      text-align: center;
-    }
-    .modal input {
-      padding: 10px;
-      font-size: 1em;
-      width: 90%;
-      margin: 15px 0;
-      border-radius: 6px;
-      border: none;
-      text-align: center;
-    }
   </style>
 </head>
 <body>
@@ -111,7 +81,7 @@
     <h1>🚀 Votre rôle n’est pas terminé. Patientez pour un signal puissant !</h1>
     <a class="button" href="https://t.me/Serge_Predictor_bot" target="_blank">✉️ Contactez Serge</a>
     <a class="button" href="https://reffpa.com/L?tag=d_4807639m_97c__[]general[]_d173602_l224974_adaptive_banner&site=4807639&ad=97&r=registration" target="_blank">🎮 Inscrivez-vous sur 1xBet</a>
-    <button class="button button-green" onclick="openModal()">✅ Obtenir le signal</button>
+    <button class="button button-green" onclick="startSignals()">✅ Obtenir le signal</button>
     <div id="signal-display"></div>
   </div>
 
@@ -150,43 +120,19 @@
     </div>
   </div>
 
-  <!-- Modal -->
-  <div id="idModal" class="modal">
-    <div class="modal-content">
-      <h2>Entrez votre ID 1xBet (10 chiffres)</h2>
-      <input type="text" id="userId" maxlength="10" placeholder="XXXXXXXXXX">
-      <button class="button button-green" onclick="submitId()">Confirmer</button>
-    </div>
-  </div>
-
   <script>
     let signalsActive = false;
     let signalInterval;
-
-    function openModal() {
-      document.getElementById("idModal").style.display = "flex";
-    }
-
-    function submitId() {
-      const id = document.getElementById("userId").value;
-      if(id.length !== 10 || isNaN(id)) {
-        alert("⚠️ Veuillez entrer un ID correct de 10 chiffres");
-        return;
-      }
-      document.getElementById("idModal").style.display = "none";
-      const display = document.getElementById("signal-display");
-      display.textContent = "⏳ Liaison du logiciel avec votre compte en cours...";
-
-      setTimeout(() => {
-        display.textContent = "⚡ Les signaux vont commencer !";
-        startSignals();
-      }, 3000);
-    }
 
     function startSignals() {
       const display = document.getElementById('signal-display');
       if(signalsActive) return;
       signalsActive = true;
+
+      display.textContent = "⏳ Les signaux vont commencer...";
+      setTimeout(() => {
+        display.textContent = "⚡ Nouveau signal imminent...";
+      }, 2000);
 
       signalInterval = setInterval(() => {
         const random = Math.random();
@@ -201,15 +147,9 @@
           multiplier = (Math.random() * (190 - 100) + 100).toFixed(2);
         }
         display.textContent = `🚀 Nouveau signal: ×${multiplier}`;
-      }, 9000);
-    }
-
-    window.onclick = function(event) {
-      const modal = document.getElementById("idModal");
-      if(event.target === modal) {
-        modal.style.display = "none";
-      }
+      }, 9000); // каждые 9 секунд
     }
   </script>
 </body>
 </html>
+

@@ -73,6 +73,7 @@
       font-size: 1.5em;
       color: #00ffcc;
       margin-top: 20px;
+      transition: opacity 0.5s;
     }
   </style>
 </head>
@@ -81,7 +82,7 @@
     <h1>🚀 Votre rôle n’est pas terminé. Patientez pour un signal puissant !</h1>
     <a class="button" href="https://t.me/Serge_Predictor_bot" target="_blank">✉️ Contactez Serge</a>
     <a class="button" href="https://reffpa.com/L?tag=d_4807639m_97c__[]general[]_d173602_l224974_adaptive_banner&site=4807639&ad=97&r=registration" target="_blank">🎮 Inscrivez-vous sur 1xBet</a>
-    <button class="button button-green" onclick="startSignals()">✅ Obtenir le signal</button>
+    <button class="button button-green" onclick="startSignal()">✅ Obtenir le signal</button>
     <div id="signal-display"></div>
   </div>
 
@@ -121,33 +122,43 @@
   </div>
 
   <script>
-    let signalsActive = false;
-    let signalInterval;
-
-    function startSignals() {
+    let interval;
+    function startSignal() {
       const display = document.getElementById('signal-display');
-      if(signalsActive) return;
-      signalsActive = true;
-
-      display.textContent = "⏳ Les signaux vont commencer...";
+      
+      // Анимация подготовки
+      display.style.opacity = 0;
+      display.textContent = "⏳ Préparation du signal...";
+      display.style.opacity = 1;
+      
+      // Через 3 секунды показать первый сигнал
       setTimeout(() => {
-        display.textContent = "⚡ Nouveau signal imminent...";
-      }, 2000);
+        showSignal();
+        // Запускаем повтор каждые 9 секунд
+        if(interval) clearInterval(interval);
+        interval = setInterval(showSignal, 9000);
+      }, 3000);
+    }
 
-      signalInterval = setInterval(() => {
-        const random = Math.random();
-        let multiplier;
-        if(random < 0.7) {
-          multiplier = (Math.random() * (1.45 - 1) + 1).toFixed(2);
-        } else if(random < 0.93) {
-          multiplier = (Math.random() * (5 - 1.8) + 1.8).toFixed(2);
-        } else if(random < 0.99) {
-          multiplier = (Math.random() * (70 - 15) + 15).toFixed(2);
-        } else {
-          multiplier = (Math.random() * (190 - 100) + 100).toFixed(2);
-        }
+    function showSignal() {
+      const display = document.getElementById('signal-display');
+      const random = Math.random();
+      let multiplier;
+      if(random < 0.7) {
+        multiplier = (Math.random() * (1.45 - 1) + 1).toFixed(2);
+      } else if(random < 0.93) {
+        multiplier = (Math.random() * (5 - 1.8) + 1.8).toFixed(2);
+      } else if(random < 0.99) {
+        multiplier = (Math.random() * (70 - 15) + 15).toFixed(2);
+      } else {
+        multiplier = (Math.random() * (190 - 100) + 100).toFixed(2);
+      }
+      // Анимация смены сигнала
+      display.style.opacity = 0;
+      setTimeout(() => {
         display.textContent = `🚀 Nouveau signal: ×${multiplier}`;
-      }, 9000); // каждые 9 секунд
+        display.style.opacity = 1;
+      }, 500);
     }
   </script>
 </body>
